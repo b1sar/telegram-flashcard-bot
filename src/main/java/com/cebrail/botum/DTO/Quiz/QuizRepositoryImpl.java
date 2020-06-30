@@ -13,7 +13,7 @@ import java.sql.*;
 import java.util.List;
 
 @Repository
-public final class QuizRepositoryImpl implements QuizRepository {
+public class QuizRepositoryImpl implements QuizRepository {
 
     final MySendPollRepository mySendPollRepository;
 

@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public final class MySendPollRepositoryImpl implements MySendPollRepository{
+public class MySendPollRepositoryImpl implements MySendPollRepository{
     private final MyPollOptionRepository myPollOptionRepository;
     private final MySendPollExtractor mySendPollExtractor;
     private final RowMapper<MySendPoll> sendPollRowMapper;

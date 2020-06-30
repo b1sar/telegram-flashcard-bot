@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Repository
-public final class MyPollOptionRepositoryImpl implements MyPollOptionRepository{
+public class MyPollOptionRepositoryImpl implements MyPollOptionRepository{
     @Override
     public void saveAll(List<MyPollOption> pollOptionList, Integer mySendPollGeneratedPrimaryKey) {
         for(MyPollOption myPollOption: pollOptionList) {
