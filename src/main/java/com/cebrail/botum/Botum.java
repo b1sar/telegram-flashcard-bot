@@ -9,6 +9,10 @@ import com.cebrail.botum.Model.MySendPoll;
 import com.cebrail.botum.Model.Quiz;
 
 import com.cebrail.botum.Util.DistributedRandomNumberGenerator;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.EnvironmentAware;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import org.telegram.telegrambots.bots.DefaultBotOptions;
@@ -30,7 +34,6 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.Keyboard
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
-import java.io.IOException;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -38,38 +41,29 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
-public class Botum extends TelegramLongPollingBot {
-    public static Properties properties;
-    static {
-        properties = new Properties();
-        try {
-            properties.load(Botum.class.getResourceAsStream("/credentials.properties"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+@PropertySource("classpath:config/credentials.properties")
+public class Botum extends TelegramLongPollingBot implements EnvironmentAware {
+    public static Environment properties;
+
+
+    @Override
+    public void setEnvironment(Environment environment) {
+        this.properties = environment;
     }
 
-    public String url = properties.getProperty("mydburl");
-    public String user = properties.getProperty("mydbuser");
-    public String password = properties.getProperty("mydbpassword");
 
-
+    @Autowired
     public EntryRepositoryImpl entryRepository;
 
+    @Autowired
     public QuizRepository quizRepository;
 
     public Botum() {
 
     }
-    public Botum(EntryRepositoryImpl entryRepository, QuizRepository quizRepository) {
-        this.entryRepository = entryRepository;
-        this.quizRepository = quizRepository;
-    }
 
-    public Botum(DefaultBotOptions options, EntryRepositoryImpl entryRepository, QuizRepository quizRepository) {
+    public Botum(DefaultBotOptions options) {
         super(options);
-        this.entryRepository = entryRepository;
-        this.quizRepository = quizRepository;
     }
 
 
